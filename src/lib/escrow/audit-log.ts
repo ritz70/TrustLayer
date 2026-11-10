@@ -44,3 +44,4 @@ export function createAuditEvent(params: CreateAuditEventParams): AuditEvent {
     createdAt: createdAt ?? new Date().toISOString(),
   });
 }
+

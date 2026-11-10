@@ -81,3 +81,4 @@ describe("Audit Log - Pure Factory", () => {
     expect(event.createdAt).toBe(customTime);
   });
 });
+

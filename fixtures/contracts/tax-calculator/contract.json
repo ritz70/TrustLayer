@@ -1,0 +1,40 @@
+{
+  "id": "c1-tax-calculator",
+  "title": "Progressive Tax Calculator",
+  "description": "Implement a progressive income tax calculator function `calculateTax(income)` in JavaScript/TypeScript.",
+  "amountCents": 50000,
+  "currency": "USD",
+  "milestonePercent": 70,
+  "criteria": [
+    {
+      "id": "tc-1",
+      "description": "Exports a function named `calculateTax(income: number): number`",
+      "hasTest": true
+    },
+    {
+      "id": "tc-2",
+      "description": "First bracket: Income up to $10,000 taxed at 10%",
+      "hasTest": true
+    },
+    {
+      "id": "tc-3",
+      "description": "Second bracket: Income from $10,001 to $50,000 taxed at 20%",
+      "hasTest": true
+    },
+    {
+      "id": "tc-4",
+      "description": "Third bracket: Income above $50,000 taxed at 30%",
+      "hasTest": true
+    },
+    {
+      "id": "tc-5",
+      "description": "Returns 0 for negative or zero income without throwing",
+      "hasTest": true
+    },
+    {
+      "id": "tc-6",
+      "description": "Must not hardcode test return values; must use progressive bracket arithmetic",
+      "hasTest": false
+    }
+  ]
+}

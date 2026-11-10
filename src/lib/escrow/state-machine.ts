@@ -107,3 +107,4 @@ export function getAllowedEvents(currentState: ContractState): ContractEvent[] {
   }
   return Object.keys(allowed) as ContractEvent[];
 }
+
