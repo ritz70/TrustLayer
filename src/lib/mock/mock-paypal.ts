@@ -135,9 +135,11 @@ export class MockPayPalAdapter implements PayPalAdapter {
   }
 
   async verifyWebhook(
-    _headers: Record<string, string>,
-    _body: string,
+    headers: Record<string, string>,
+    body: string,
   ): Promise<boolean> {
+    void headers;
+    void body;
     // Mock always verifies successfully
     return true;
   }
