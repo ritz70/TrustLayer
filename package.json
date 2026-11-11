@@ -6,13 +6,20 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint && tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "eval": "npx tsx evals/run-evals.ts"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.119.0",
     "lucide-react": "^1.71.0",
     "next": "16.4.6",
+    "openai": "^7.55.0",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "uuid": "^14.0.3",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.5",
@@ -20,10 +27,12 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/uuid": "^10.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
     "postcss": "^8.5.32",
     "tailwindcss": "4.3.3",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.12"
   }
 }

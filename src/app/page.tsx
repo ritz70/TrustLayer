@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import {
   Activity,
@@ -185,7 +185,7 @@ export default function Home() {
             <div className="search-box">
               <Search size={16} />
               <span>Search anything...</span>
-              <kbd>⌘ K</kbd>
+              <kbd>Γîÿ K</kbd>
             </div>
             <button className="icon-button" aria-label="Notifications">
               <Bell size={18} />
@@ -377,9 +377,9 @@ export default function Home() {
           </section>
 
           <footer className="dashboard-footer">
-            <span>© 2026 TrustLayer</span>
+            <span>┬⌐ 2026 TrustLayer</span>
             <span className="demo-disclaimer">
-              <span className="demo-dot" /> Prototype data · Not live transactions
+              <span className="demo-dot" /> Prototype data ┬╖ Not live transactions
             </span>
             <span>Built for work you can trust.</span>
           </footer>
