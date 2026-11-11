@@ -1,285 +1,390 @@
+import Link from "next/link";
+import type { LucideIcon } from "lucide-react";
+import {
+  Activity,
+  ArrowUpRight,
+  Bell,
+  BriefcaseBusiness,
+  CheckCircle2,
+  ChevronDown,
+  Clock3,
+  Code2,
+  FileCheck2,
+  LayoutDashboard,
+  Plus,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  Wallet,
+  MoreHorizontal,
+  Zap,
+} from "lucide-react";
 
-"use client";
+const navigation = [
+  { label: "Overview", icon: LayoutDashboard, active: true },
+  { label: "Explore contracts", icon: BriefcaseBusiness },
+  { label: "My contracts", icon: FileCheck2 },
+  { label: "Workspace", icon: Code2 },
+];
 
-import { useState } from "react";
+const management = [
+  { label: "Verification", icon: ShieldCheck },
+  { label: "Payments", icon: Wallet },
+];
 
-type Tab = "client" | "freelancer" | "results";
+const contracts = [
+  {
+    title: "Build a tax calculator",
+    id: "TL-2026-001",
+    freelancer: "Alex Morgan",
+    initials: "AM",
+    amount: "$450.00",
+    status: "In progress",
+    statusClass: "progress",
+    date: "Nov 12, 2026",
+    color: "blue",
+  },
+  {
+    title: "Python data processor",
+    id: "TL-2026-002",
+    freelancer: "Sarah Chen",
+    initials: "SC",
+    amount: "$320.00",
+    status: "Under review",
+    statusClass: "review",
+    date: "Nov 11, 2026",
+    color: "purple",
+  },
+  {
+    title: "API validation module",
+    id: "TL-2026-003",
+    freelancer: "James Wilson",
+    initials: "JW",
+    amount: "$600.00",
+    status: "Completed",
+    statusClass: "completed",
+    date: "Nov 09, 2026",
+    color: "green",
+  },
+];
+
+const activities = [
+  {
+    title: "Contract created",
+    description: "Build a tax calculator",
+    time: "2 hours ago",
+    icon: Plus,
+    color: "blue",
+  },
+  {
+    title: "Code submitted",
+    description: "Python data processor",
+    time: "5 hours ago",
+    icon: Code2,
+    color: "purple",
+  },
+  {
+    title: "Verification passed",
+    description: "API validation module",
+    time: "Yesterday",
+    icon: CheckCircle2,
+    color: "green",
+  },
+];
+
+function SidebarLink({
+  icon: Icon,
+  label,
+  active = false,
+}: {
+  icon: LucideIcon;
+  label: string;
+  active?: boolean;
+}) {
+  return (
+    <a
+      href="#"
+      className={`sidebar-link ${active ? "active" : ""}`}
+    >
+      <Icon size={18} strokeWidth={1.8} />
+      <span>{label}</span>
+      {active && <span className="active-indicator" />}
+    </a>
+  );
+}
 
 export default function Home() {
-  const [tab, setTab] = useState<Tab>("client");
-  const [title, setTitle] = useState("Build a landing page");
-  const [description, setDescription] = useState(
-    "Create a responsive landing page with a modern design."
-  );
-  const [budget, setBudget] = useState("5000");
-  const [funded, setFunded] = useState(false);
-  const [submission, setSubmission] = useState("");
-  const [status, setStatus] = useState<"pending" | "passed" | "failed">("pending");
-  const [feedback, setFeedback] = useState("");
-
-  function verifySubmission() {
-    if (!submission.trim()) {
-      setStatus("failed");
-      setFeedback("No work was submitted.");
-      return;
-    }
-
-    if (submission.trim().length < 30) {
-      setStatus("failed");
-      setFeedback("Submission is too short. Provide a more detailed deliverable.");
-      return;
-    }
-
-    setStatus("passed");
-    setFeedback("Basic demo checks passed. Human review is still required.");
-  }
-
-  const tabs: { id: Tab; label: string }[] = [
-    { id: "client", label: "Client" },
-    { id: "freelancer", label: "Freelancer" },
-    { id: "results", label: "Results" },
-  ];
-
   return (
-    <main className="min-h-screen bg-[#090d18] text-white">
-      <header className="border-b border-white/10 bg-[#0d1322]">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight">
-              Trust<span className="text-cyan-400">Layer</span>
-            </h1>
-            <p className="text-xs text-slate-400">
-              Work with trust. Pay with confidence.
-            </p>
+    <main className="app-shell">
+      <aside className="sidebar">
+        <a href="/" className="brand">
+          <div className="brand-icon">
+            <ShieldCheck size={23} />
           </div>
-          <div className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-xs text-cyan-300">
-            Prototype
-          </div>
-        </div>
-      </header>
+          <span>trust<span className="brand-light">layer</span></span>
+        </a>
 
-      <section className="mx-auto max-w-6xl px-6 py-12">
-        <div className="mb-10">
-          <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-cyan-400">
-            Trust-first work platform
-          </p>
-          <h2 className="text-4xl font-bold tracking-tight md:text-5xl">
-            Every task deserves
-            <br />
-            <span className="text-cyan-400">a fair outcome.</span>
-          </h2>
-          <p className="mt-4 max-w-xl text-slate-400">
-            Create jobs, submit deliverables and verify work through a
-            transparent workflow.
-          </p>
+        <div className="workspace-switcher">
+          <div className="workspace-avatar">T</div>
+          <div className="workspace-info">
+            <span className="workspace-label">WORKSPACE</span>
+            <span className="workspace-name">Personal workspace</span>
+          </div>
+          <ChevronDown size={15} />
         </div>
 
-        <div className="mb-8 flex flex-wrap gap-2 rounded-xl border border-white/10 bg-[#111827] p-2">
-          {tabs.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setTab(item.id)}
-              className={`rounded-lg px-6 py-3 text-sm font-semibold transition ${
-                tab === item.id
-                  ? "bg-cyan-400 text-slate-950"
-                  : "text-slate-400 hover:bg-white/5 hover:text-white"
-              }`}
-            >
-              {item.label}
-            </button>
+        <div className="nav-section">
+          <p className="nav-heading">WORKSPACE</p>
+          {navigation.map((item) => (
+            <SidebarLink key={item.label} {...item} />
           ))}
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
-          <div className="rounded-2xl border border-white/10 bg-[#111827] p-6 md:p-8">
-            {tab === "client" && (
-              <div>
-                <p className="mb-2 text-sm text-cyan-400">01 / CLIENT VIEW</p>
-                <h3 className="text-2xl font-bold">Create a new job</h3>
-                <p className="mb-7 mt-2 text-sm text-slate-400">
-                  Define your task and allocate a budget.
-                </p>
+        <div className="nav-section">
+          <p className="nav-heading">TRUST & FINANCE</p>
+          {management.map((item) => (
+            <SidebarLink key={item.label} {...item} />
+          ))}
+        </div>
 
-                <label className="mb-2 block text-sm text-slate-300">
-                  Job title
-                </label>
-                <input
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  className="mb-5 w-full rounded-lg border border-white/10 bg-[#090d18] p-3 outline-none focus:border-cyan-400"
-                  placeholder="Enter job title"
-                />
-
-                <label className="mb-2 block text-sm text-slate-300">
-                  Job description
-                </label>
-                <textarea
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  rows={4}
-                  className="mb-5 w-full rounded-lg border border-white/10 bg-[#090d18] p-3 outline-none focus:border-cyan-400"
-                  placeholder="Describe the expected work..."
-                />
-
-                <label className="mb-2 block text-sm text-slate-300">
-                  Budget (INR)
-                </label>
-                <input
-                  type="number"
-                  min="1"
-                  value={budget}
-                  onChange={(e) => setBudget(e.target.value)}
-                  className="mb-6 w-full rounded-lg border border-white/10 bg-[#090d18] p-3 outline-none focus:border-cyan-400"
-                />
-
-                <button
-                  disabled={!title.trim() || !description.trim() || Number(budget) <= 0 || funded}
-                  onClick={() => setFunded(true)}
-                  className="w-full rounded-lg bg-cyan-400 px-5 py-3 font-bold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-40"
-                >
-                  {funded ? "Job funded (demo)" : "Create job & fund escrow"}
-                </button>
-
-                {funded && (
-                  <p className="mt-3 text-sm text-emerald-400">
-                    Job created successfully in this prototype.
-                  </p>
-                )}
-              </div>
-            )}
-
-            {tab === "freelancer" && (
-              <div>
-                <p className="mb-2 text-sm text-cyan-400">02 / FREELANCER VIEW</p>
-                <h3 className="text-2xl font-bold">Submit your work</h3>
-                <p className="mb-6 mt-2 text-sm text-slate-400">
-                  Review the client's requirements and submit your deliverable.
-                </p>
-
-                <div className="mb-6 rounded-xl border border-white/10 bg-[#090d18] p-5">
-                  <p className="text-xs text-slate-500">CURRENT JOB</p>
-                  <h4 className="mt-2 text-lg font-semibold">{title || "Untitled job"}</h4>
-                  <p className="mt-2 text-sm text-slate-400">{description}</p>
-                  <p className="mt-4 font-semibold text-cyan-400">
-                    ₹{Number(budget || 0).toLocaleString("en-IN")}
-                  </p>
-                  <p className="mt-2 text-xs text-slate-500">
-                    Escrow status: {funded ? "Funded (demo)" : "Not funded"}
-                  </p>
-                </div>
-
-                <label className="mb-2 block text-sm text-slate-300">
-                  Deliverable / submission details
-                </label>
-                <textarea
-                  value={submission}
-                  onChange={(e) => {
-                    setSubmission(e.target.value);
-                    setStatus("pending");
-                    setFeedback("");
-                  }}
-                  rows={7}
-                  className="mb-5 w-full rounded-lg border border-white/10 bg-[#090d18] p-3 outline-none focus:border-cyan-400"
-                  placeholder="Describe your completed work or paste a deliverable link..."
-                />
-
-                <button
-                  onClick={() => setTab("results")}
-                  disabled={!submission.trim()}
-                  className="w-full rounded-lg bg-cyan-400 px-5 py-3 font-bold text-slate-950 hover:bg-cyan-300 disabled:opacity-40"
-                >
-                  Submit work
-                </button>
-              </div>
-            )}
-
-            {tab === "results" && (
-              <div>
-                <p className="mb-2 text-sm text-cyan-400">03 / VERIFICATION</p>
-                <h3 className="text-2xl font-bold">Submission results</h3>
-                <p className="mb-7 mt-2 text-sm text-slate-400">
-                  Run basic checks on the submitted deliverable.
-                </p>
-
-                <div className="mb-6 rounded-xl border border-white/10 bg-[#090d18] p-5">
-                  <p className="text-xs text-slate-500">JOB</p>
-                  <p className="mt-2 font-semibold">{title}</p>
-                  <p className="mt-4 text-xs text-slate-500">SUBMISSION</p>
-                  <p className="mt-2 whitespace-pre-wrap text-sm text-slate-300">
-                    {submission || "No submission received yet."}
-                  </p>
-                </div>
-
-                <div className="mb-6 rounded-xl border border-white/10 p-5">
-                  <p className="text-sm text-slate-400">Verification status</p>
-                  <p className={`mt-3 text-2xl font-bold ${
-                    status === "passed"
-                      ? "text-emerald-400"
-                      : status === "failed"
-                      ? "text-red-400"
-                      : "text-amber-400"
-                  }`}>
-                    {status === "passed"
-                      ? "PASSED"
-                      : status === "failed"
-                      ? "FAILED"
-                      : "PENDING"}
-                  </p>
-                  <p className="mt-3 text-sm text-slate-400">
-                    {feedback || "Your submission is awaiting verification."}
-                  </p>
-                </div>
-
-                <button
-                  onClick={verifySubmission}
-                  disabled={!submission.trim()}
-                  className="w-full rounded-lg bg-cyan-400 px-5 py-3 font-bold text-slate-950 hover:bg-cyan-300 disabled:opacity-40"
-                >
-                  Run verification
-                </button>
-              </div>
-            )}
+        <div className="sidebar-bottom">
+          <div className="trust-card">
+            <div className="trust-card-icon">
+              <Sparkles size={17} />
+            </div>
+            <p className="trust-card-title">Built on trust.</p>
+            <p className="trust-card-text">
+              Work verified. Payments protected.
+            </p>
+            <div className="trust-card-line" />
+            <span className="trust-card-caption">
+              TRUSTLAYER PLATFORM
+            </span>
           </div>
 
-          <aside className="h-fit rounded-2xl border border-white/10 bg-[#111827] p-6">
-            <h3 className="font-bold">Job overview</h3>
-            <div className="mt-5 space-y-5">
-              <div>
-                <p className="text-xs text-slate-500">JOB STATUS</p>
-                <p className="mt-1 font-semibold">
-                  {funded ? "Active (demo)" : "Draft"}
-                </p>
-              </div>
-              <div>
-                <p className="text-xs text-slate-500">BUDGET</p>
-                <p className="mt-1 text-xl font-bold text-cyan-400">
-                  ₹{Number(budget || 0).toLocaleString("en-IN")}
-                </p>
-              </div>
-              <div>
-                <p className="text-xs text-slate-500">SUBMISSION</p>
-                <p className="mt-1 font-semibold">
-                  {submission.trim() ? "Received" : "Awaiting"}
-                </p>
-              </div>
-              <div>
-                <p className="text-xs text-slate-500">VERIFICATION</p>
-                <p className="mt-1 font-semibold capitalize">{status}</p>
-              </div>
+          <a href="#" className="profile-row">
+            <div className="profile-avatar">R</div>
+            <div className="profile-info">
+              <span className="profile-name">Your account</span>
+              <span className="profile-role">Workspace member</span>
             </div>
-            <div className="mt-7 border-t border-white/10 pt-5">
-              <p className="text-xs leading-6 text-slate-500">
-                Prototype only. Escrow funding and verification are simulated.
-                No real money is transferred.
+            <MoreHorizontal size={19} />
+          </a>
+        </div>
+      </aside>
+
+      <section className="main-area">
+        <header className="topbar">
+          <div className="breadcrumb">
+            <span>Workspace</span>
+            <span className="breadcrumb-slash">/</span>
+            <strong>Overview</strong>
+          </div>
+
+          <div className="topbar-actions">
+            <div className="search-box">
+              <Search size={16} />
+              <span>Search anything...</span>
+              <kbd>⌘ K</kbd>
+            </div>
+            <button className="icon-button" aria-label="Notifications">
+              <Bell size={18} />
+              <span className="notification-dot" />
+            </button>
+            <div className="topbar-avatar">R</div>
+          </div>
+        </header>
+
+        <div className="dashboard-content">
+          <section className="welcome-row">
+            <div>
+              <div className="eyebrow">
+                <span className="eyebrow-dot" />
+                YOUR TRUSTLAYER WORKSPACE
+              </div>
+              <h1>Good evening<span className="heading-period">.</span></h1>
+              <p className="welcome-description">
+                Here's what's happening with your contracts today.
               </p>
             </div>
-          </aside>
+
+            <Link href="/create-contract" className="primary-button">
+              <Plus size={17} />
+              Create contract
+            </Link>
+          </section>
+
+          <section className="stats-grid">
+            <article className="stat-card">
+              <div className="stat-top">
+                <span className="stat-label">Active contracts</span>
+                <div className="stat-icon blue"><BriefcaseBusiness size={18} /></div>
+              </div>
+              <div className="stat-value">08</div>
+              <div className="stat-footer">
+                <span className="stat-muted">Currently in progress</span>
+                <span className="stat-trend positive">
+                  <ArrowUpRight size={14} /> 2 this week
+                </span>
+              </div>
+            </article>
+
+            <article className="stat-card">
+              <div className="stat-top">
+                <span className="stat-label">Funds authorized</span>
+                <div className="stat-icon purple"><Wallet size={18} /></div>
+              </div>
+              <div className="stat-value">$2,840<span className="stat-decimal">.00</span></div>
+              <div className="stat-footer">
+                <span className="stat-muted">Sandbox payment data</span>
+                <span className="stat-trend neutral">PayPal Sandbox</span>
+              </div>
+            </article>
+
+            <article className="stat-card">
+              <div className="stat-top">
+                <span className="stat-label">Awaiting verification</span>
+                <div className="stat-icon amber"><Clock3 size={18} /></div>
+              </div>
+              <div className="stat-value">03</div>
+              <div className="stat-footer">
+                <span className="stat-muted">Submissions pending</span>
+                <span className="stat-trend warning">Needs attention</span>
+              </div>
+            </article>
+
+            <article className="stat-card">
+              <div className="stat-top">
+                <span className="stat-label">Successfully completed</span>
+                <div className="stat-icon green"><CheckCircle2 size={18} /></div>
+              </div>
+              <div className="stat-value">24</div>
+              <div className="stat-footer">
+                <span className="stat-muted">Contracts completed</span>
+                <span className="stat-trend positive">
+                  <ArrowUpRight size={14} /> 12% this month
+                </span>
+              </div>
+            </article>
+          </section>
+
+          <section className="content-grid">
+            <div className="panel contracts-panel">
+              <div className="panel-header">
+                <div>
+                  <h2>Recent contracts</h2>
+                  <p>Your latest contract activity</p>
+                </div>
+                <button className="text-button">View all <ArrowUpRight size={14} /></button>
+              </div>
+
+              <div className="contract-table">
+                <div className="table-heading">
+                  <span>CONTRACT</span>
+                  <span>FREELANCER</span>
+                  <span>AMOUNT</span>
+                  <span>STATUS</span>
+                  <span />
+                </div>
+
+                {contracts.map((contract) => (
+                  <div className="contract-row" key={contract.id}>
+                    <div className="contract-name">
+                      <div className={`contract-icon ${contract.color}`}>
+                        <Code2 size={17} />
+                      </div>
+                      <div>
+                        <strong>{contract.title}</strong>
+                        <span>{contract.id}</span>
+                      </div>
+                    </div>
+
+                    <div className="freelancer-cell">
+                      <div className="mini-avatar">{contract.initials}</div>
+                      <span>{contract.freelancer}</span>
+                    </div>
+
+                    <strong className="amount-cell">{contract.amount}</strong>
+
+                    <div>
+                      <span className={`status-pill ${contract.statusClass}`}>
+                        <span className="status-dot" />
+                        {contract.status}
+                      </span>
+                    </div>
+
+                    <button className="row-menu" aria-label="Contract options">
+                      <MoreHorizontal size={18} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="panel-footer">
+                <span>Showing 3 of 8 contracts</span>
+                <button className="pagination-button">View contracts <ArrowUpRight size={14} /></button>
+              </div>
+            </div>
+
+            <div className="panel activity-panel">
+              <div className="panel-header">
+                <div>
+                  <h2>Recent activity</h2>
+                  <p>Latest workspace updates</p>
+                </div>
+                <button className="icon-button subtle" aria-label="Activity options">
+                  <MoreHorizontal size={18} />
+                </button>
+              </div>
+
+              <div className="activity-list">
+                {activities.map((activity) => {
+                  const Icon = activity.icon;
+                  return (
+                    <div className="activity-item" key={activity.title}>
+                      <div className={`activity-icon ${activity.color}`}>
+                        <Icon size={16} />
+                      </div>
+                      <div className="activity-copy">
+                        <strong>{activity.title}</strong>
+                        <span>{activity.description}</span>
+                        <small>{activity.time}</small>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="activity-summary">
+                <div className="summary-icon"><Activity size={17} /></div>
+                <div>
+                  <strong>Everything in one place.</strong>
+                  <span>Track work, verification and payments.</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="bottom-banner">
+            <div className="banner-icon"><Zap size={20} /></div>
+            <div className="banner-copy">
+              <strong>Trust is built into every transaction.</strong>
+              <span>Code is tested. Deliverables are reviewed. Payments follow the outcome.</span>
+            </div>
+            <div className="banner-badge">
+              <ShieldCheck size={15} /> TRUSTLAYER
+            </div>
+          </section>
+
+          <footer className="dashboard-footer">
+            <span>© 2026 TrustLayer</span>
+            <span className="demo-disclaimer">
+              <span className="demo-dot" /> Prototype data · Not live transactions
+            </span>
+            <span>Built for work you can trust.</span>
+          </footer>
         </div>
       </section>
-
-      <footer className="border-t border-white/10 px-6 py-6 text-center text-xs text-slate-500">
-        © 2026 TrustLayer. Built for transparent digital work.
-      </footer>
     </main>
   );
 }
