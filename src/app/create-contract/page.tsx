@@ -269,7 +269,7 @@ export default function CreateContractPage() {
                   <p>
                     TrustLayer focuses on checkable code deliverables
                     with automated tests. Subjective work is outside
-                    this prototype's verification scope.
+                    this prototype&apos;s verification scope.
                   </p>
                 </div>
               </section>

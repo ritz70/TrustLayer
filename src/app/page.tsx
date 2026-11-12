@@ -117,12 +117,12 @@ export default function Home() {
   return (
     <main className="app-shell">
       <aside className="sidebar">
-        <a href="/" className="brand">
+        <Link href="/" className="brand">
           <div className="brand-icon">
             <ShieldCheck size={23} />
           </div>
           <span>trust<span className="brand-light">layer</span></span>
-        </a>
+        </Link>
 
         <div className="workspace-switcher">
           <div className="workspace-avatar">T</div>
@@ -204,7 +204,7 @@ export default function Home() {
               </div>
               <h1>Good evening<span className="heading-period">.</span></h1>
               <p className="welcome-description">
-                Here's what's happening with your contracts today.
+                Here&apos;s what&apos;s happening with your contracts today.
               </p>
             </div>
 

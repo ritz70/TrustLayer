@@ -8,7 +8,7 @@ Build a working prototype of an AI-assisted milestone escrow for freelance work,
 
 - Problem: strangers trading money for unfinished work deadlock over who goes first, and "done" is never defined.
 - Users: a solo freelancer and a small-business client on a fixed-price job of about $200-$3,000.
-- Idea: both sides agree on checkable acceptance criteria BEFORE funding. PayPal holds the money. A test + AI verifier recommends release or hold. Deterministic code, never the model, moves money.
+- Idea: both sides agree  on checkable acceptance criteria BEFORE funding. PayPal holds the money. A test + AI verifier recommends release or hold. Deterministic code, never the model, moves money.
 - Pitch: "We make 'done' checkable before money moves. AI recommends, a human decides when unsure, PayPal releases the funds."
 
 ## 2. Hard constraints and clock
@@ -62,17 +62,17 @@ supabase/migrations/ PostgreSQL schema migrations
 
 PayPal interface (both real and mock implement it): `createOrder`, `authorize`, `capture(partial)`, `payout`, `verifyWebhook`.
 
-| From | Event | To |
-|---|---|---|
-| DRAFT | both accept criteria | AGREED |
-| AGREED | order authorized | FUNDED |
-| FUNDED | deliverable submitted | SUBMITTED |
-| SUBMITTED | pass, high confidence | RELEASABLE |
-| SUBMITTED | fail | HELD (resubmit allowed) |
-| SUBMITTED | uncertain / low confidence | IN_REVIEW |
-| IN_REVIEW | human approves / rejects | RELEASABLE / HELD |
-| RELEASABLE | capture + payout succeed | RELEASED |
-| any | dispute within window | DISPUTED |
+| From       | Event                      | To                      |
+| ---------- | -------------------------- | ----------------------- |
+| DRAFT      | both accept criteria       | AGREED                  |
+| AGREED     | order authorized           | FUNDED                  |
+| FUNDED     | deliverable submitted      | SUBMITTED               |
+| SUBMITTED  | pass, high confidence      | RELEASABLE              |
+| SUBMITTED  | fail                       | HELD (resubmit allowed) |
+| SUBMITTED  | uncertain / low confidence | IN_REVIEW               |
+| IN_REVIEW  | human approves / rejects   | RELEASABLE / HELD       |
+| RELEASABLE | capture + payout succeed   | RELEASED                |
+| any        | dispute within window      | DISPUTED                |
 
 No implicit transitions. Illegal ones throw and are tested.
 
