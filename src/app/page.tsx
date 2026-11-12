@@ -1,390 +1,272 @@
+﻿
 import Link from "next/link";
-import type { LucideIcon } from "lucide-react";
 import {
-  Activity,
-  ArrowUpRight,
-  Bell,
-  BriefcaseBusiness,
-  CheckCircle2,
-  ChevronDown,
-  Clock3,
-  Code2,
-  FileCheck2,
-  LayoutDashboard,
-  Plus,
-  Search,
   ShieldCheck,
-  Sparkles,
-  Wallet,
-  MoreHorizontal,
+  ArrowUpRight,
+  ArrowRight,
+  Check,
+  LockKeyhole,
+  Code2,
   Zap,
+  Eye,
+  CircleCheck,
+  Fingerprint,
+  Layers3,
 } from "lucide-react";
+import "./landing.css";
 
-const navigation = [
-  { label: "Overview", icon: LayoutDashboard, active: true },
-  { label: "Explore contracts", icon: BriefcaseBusiness },
-  { label: "My contracts", icon: FileCheck2 },
-  { label: "Workspace", icon: Code2 },
-];
-
-const management = [
-  { label: "Verification", icon: ShieldCheck },
-  { label: "Payments", icon: Wallet },
-];
-
-const contracts = [
+const features = [
   {
-    title: "Build a tax calculator",
-    id: "TL-2026-001",
-    freelancer: "Alex Morgan",
-    initials: "AM",
-    amount: "$450.00",
-    status: "In progress",
-    statusClass: "progress",
-    date: "Nov 12, 2026",
-    color: "blue",
-  },
-  {
-    title: "Python data processor",
-    id: "TL-2026-002",
-    freelancer: "Sarah Chen",
-    initials: "SC",
-    amount: "$320.00",
-    status: "Under review",
-    statusClass: "review",
-    date: "Nov 11, 2026",
-    color: "purple",
-  },
-  {
-    title: "API validation module",
-    id: "TL-2026-003",
-    freelancer: "James Wilson",
-    initials: "JW",
-    amount: "$600.00",
-    status: "Completed",
-    statusClass: "completed",
-    date: "Nov 09, 2026",
-    color: "green",
-  },
-];
-
-const activities = [
-  {
-    title: "Contract created",
-    description: "Build a tax calculator",
-    time: "2 hours ago",
-    icon: Plus,
-    color: "blue",
-  },
-  {
-    title: "Code submitted",
-    description: "Python data processor",
-    time: "5 hours ago",
     icon: Code2,
-    color: "purple",
+    title: "Code that proves itself",
+    description:
+      "Deliverables are checked against defined acceptance criteria and automated tests before release.",
   },
   {
-    title: "Verification passed",
-    description: "API validation module",
-    time: "Yesterday",
-    icon: CheckCircle2,
-    color: "green",
+    icon: ShieldCheck,
+    title: "Payments follow verification",
+    description:
+      "Explore a simulated payment workflow tied to verification outcomes.",
+  },
+  {
+    icon: Eye,
+    title: "Evidence, not assumptions",
+    description:
+      "Every verification produces evidence. Uncertain outcomes can be sent for human review.",
   },
 ];
-
-function SidebarLink({
-  icon: Icon,
-  label,
-  active = false,
-}: {
-  icon: LucideIcon;
-  label: string;
-  active?: boolean;
-}) {
-  return (
-    <a
-      href="#"
-      className={`sidebar-link ${active ? "active" : ""}`}
-    >
-      <Icon size={18} strokeWidth={1.8} />
-      <span>{label}</span>
-      {active && <span className="active-indicator" />}
-    </a>
-  );
-}
 
 export default function Home() {
   return (
-    <main className="app-shell">
-      <aside className="sidebar">
-        <Link href="/" className="brand">
-          <div className="brand-icon">
-            <ShieldCheck size={23} />
-          </div>
-          <span>trust<span className="brand-light">layer</span></span>
+    <main className="landing">
+      <nav className="landing-nav">
+        <Link href="/" className="landing-brand">
+          <span className="landing-brand-icon">
+            <ShieldCheck size={22} />
+          </span>
+          trust<span>layer</span>
         </Link>
 
-        <div className="workspace-switcher">
-          <div className="workspace-avatar">T</div>
-          <div className="workspace-info">
-            <span className="workspace-label">WORKSPACE</span>
-            <span className="workspace-name">Personal workspace</span>
-          </div>
-          <ChevronDown size={15} />
+        <div className="landing-nav-links">
+          <a href="#how-it-works">How it works</a>
+          <a href="#features">Features</a>
         </div>
 
-        <div className="nav-section">
-          <p className="nav-heading">WORKSPACE</p>
-          {navigation.map((item) => (
-            <SidebarLink key={item.label} {...item} />
-          ))}
+        <div className="landing-nav-actions">
+          <Link href="/dashboard" className="nav-login">
+            Open dashboard
+          </Link>
+          <Link href="/create-contract" className="nav-cta">
+            Get started <ArrowUpRight size={16} />
+          </Link>
         </div>
+      </nav>
 
-        <div className="nav-section">
-          <p className="nav-heading">TRUST & FINANCE</p>
-          {management.map((item) => (
-            <SidebarLink key={item.label} {...item} />
-          ))}
-        </div>
-
-        <div className="sidebar-bottom">
-          <div className="trust-card">
-            <div className="trust-card-icon">
-              <Sparkles size={17} />
-            </div>
-            <p className="trust-card-title">Built on trust.</p>
-            <p className="trust-card-text">
-              Work verified. Payments protected.
-            </p>
-            <div className="trust-card-line" />
-            <span className="trust-card-caption">
-              TRUSTLAYER PLATFORM
-            </span>
+      <section className="hero">
+        <div className="hero-copy">
+          <div className="hero-eyebrow">
+            <span className="live-dot" />
+            TRUST-FIRST FREELANCE PAYMENTS
           </div>
 
-          <a href="#" className="profile-row">
-            <div className="profile-avatar">R</div>
-            <div className="profile-info">
-              <span className="profile-name">Your account</span>
-              <span className="profile-role">Workspace member</span>
-            </div>
-            <MoreHorizontal size={19} />
-          </a>
-        </div>
-      </aside>
+          <h1>
+            Work delivered.
+            <br />
+            Payments <span>verified.</span>
+          </h1>
 
-      <section className="main-area">
-        <header className="topbar">
-          <div className="breadcrumb">
-            <span>Workspace</span>
-            <span className="breadcrumb-slash">/</span>
-            <strong>Overview</strong>
-          </div>
+          <p className="hero-description">
+            A smarter way to work together. Define milestones, verify code
+            submissions, and release payments when agreed conditions are met.
+          </p>
 
-          <div className="topbar-actions">
-            <div className="search-box">
-              <Search size={16} />
-              <span>Search anything...</span>
-              <kbd>Γîÿ K</kbd>
-            </div>
-            <button className="icon-button" aria-label="Notifications">
-              <Bell size={18} />
-              <span className="notification-dot" />
-            </button>
-            <div className="topbar-avatar">R</div>
-          </div>
-        </header>
-
-        <div className="dashboard-content">
-          <section className="welcome-row">
-            <div>
-              <div className="eyebrow">
-                <span className="eyebrow-dot" />
-                YOUR TRUSTLAYER WORKSPACE
-              </div>
-              <h1>Good evening<span className="heading-period">.</span></h1>
-              <p className="welcome-description">
-                Here&apos;s what&apos;s happening with your contracts today.
-              </p>
-            </div>
-
-            <Link href="/create-contract" className="primary-button">
-              <Plus size={17} />
-              Create contract
+          <div className="hero-actions">
+            <Link href="/create-contract" className="hero-primary">
+              Create a contract <ArrowRight size={17} />
             </Link>
-          </section>
+            <Link href="/dashboard" className="hero-secondary">
+              Explore dashboard
+            </Link>
+          </div>
 
-          <section className="stats-grid">
-            <article className="stat-card">
-              <div className="stat-top">
-                <span className="stat-label">Active contracts</span>
-                <div className="stat-icon blue"><BriefcaseBusiness size={18} /></div>
-              </div>
-              <div className="stat-value">08</div>
-              <div className="stat-footer">
-                <span className="stat-muted">Currently in progress</span>
-                <span className="stat-trend positive">
-                  <ArrowUpRight size={14} /> 2 this week
-                </span>
-              </div>
-            </article>
+          <div className="hero-trust">
+            <div className="trust-avatars">
+              <span>C</span>
+              <span>F</span>
+              <span><ShieldCheck size={13} /></span>
+            </div>
+            <p>Built around transparency, verification and accountability.</p>
+          </div>
+        </div>
 
-            <article className="stat-card">
-              <div className="stat-top">
-                <span className="stat-label">Funds authorized</span>
-                <div className="stat-icon purple"><Wallet size={18} /></div>
-              </div>
-              <div className="stat-value">$2,840<span className="stat-decimal">.00</span></div>
-              <div className="stat-footer">
-                <span className="stat-muted">Sandbox payment data</span>
-                <span className="stat-trend neutral">PayPal Sandbox</span>
-              </div>
-            </article>
+        <div className="hero-visual">
+          <div className="visual-glow" />
 
-            <article className="stat-card">
-              <div className="stat-top">
-                <span className="stat-label">Awaiting verification</span>
-                <div className="stat-icon amber"><Clock3 size={18} /></div>
-              </div>
-              <div className="stat-value">03</div>
-              <div className="stat-footer">
-                <span className="stat-muted">Submissions pending</span>
-                <span className="stat-trend warning">Needs attention</span>
-              </div>
-            </article>
+          <div className="floating-label label-top">
+            <span className="label-icon"><LockKeyhole size={15} /></span>
+            Sandbox preview
+          </div>
 
-            <article className="stat-card">
-              <div className="stat-top">
-                <span className="stat-label">Successfully completed</span>
-                <div className="stat-icon green"><CheckCircle2 size={18} /></div>
+          <div className="escrow-card">
+            <div className="escrow-card-header">
+              <div>
+                <span className="visual-overline">CONTRACT OVERVIEW</span>
+                <h3>Website development</h3>
               </div>
-              <div className="stat-value">24</div>
-              <div className="stat-footer">
-                <span className="stat-muted">Contracts completed</span>
-                <span className="stat-trend positive">
-                  <ArrowUpRight size={14} /> 12% this month
-                </span>
-              </div>
-            </article>
-          </section>
+              <span className="secure-badge">
+                <ShieldCheck size={13} /> Protected
+              </span>
+            </div>
 
-          <section className="content-grid">
-            <div className="panel contracts-panel">
-              <div className="panel-header">
+            <div className="escrow-amount">
+              <span>Milestone value</span>
+              <strong>$1,200.00</strong>
+              <small><LockKeyhole size={12} /> Sandbox authorization preview</small>
+            </div>
+
+            <div className="escrow-divider" />
+
+            <div className="milestone-heading">
+              <span>Verification progress</span>
+              <span>Step 2 of 3</span>
+            </div>
+
+            <div className="milestone-track">
+              <span className="track-done" />
+              <span className="track-active" />
+              <span />
+            </div>
+
+            <div className="verification-list">
+              <div>
+                <span className="verification-icon done"><Check size={13} /></span>
                 <div>
-                  <h2>Recent contracts</h2>
-                  <p>Your latest contract activity</p>
+                  <strong>Contract agreed</strong>
+                  <small>Acceptance criteria established</small>
                 </div>
-                <button className="text-button">View all <ArrowUpRight size={14} /></button>
+                <span className="verification-status">Complete</span>
               </div>
 
-              <div className="contract-table">
-                <div className="table-heading">
-                  <span>CONTRACT</span>
-                  <span>FREELANCER</span>
-                  <span>AMOUNT</span>
-                  <span>STATUS</span>
-                  <span />
-                </div>
-
-                {contracts.map((contract) => (
-                  <div className="contract-row" key={contract.id}>
-                    <div className="contract-name">
-                      <div className={`contract-icon ${contract.color}`}>
-                        <Code2 size={17} />
-                      </div>
-                      <div>
-                        <strong>{contract.title}</strong>
-                        <span>{contract.id}</span>
-                      </div>
-                    </div>
-
-                    <div className="freelancer-cell">
-                      <div className="mini-avatar">{contract.initials}</div>
-                      <span>{contract.freelancer}</span>
-                    </div>
-
-                    <strong className="amount-cell">{contract.amount}</strong>
-
-                    <div>
-                      <span className={`status-pill ${contract.statusClass}`}>
-                        <span className="status-dot" />
-                        {contract.status}
-                      </span>
-                    </div>
-
-                    <button className="row-menu" aria-label="Contract options">
-                      <MoreHorizontal size={18} />
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-              <div className="panel-footer">
-                <span>Showing 3 of 8 contracts</span>
-                <button className="pagination-button">View contracts <ArrowUpRight size={14} /></button>
-              </div>
-            </div>
-
-            <div className="panel activity-panel">
-              <div className="panel-header">
+              <div>
+                <span className="verification-icon active"><Code2 size={13} /></span>
                 <div>
-                  <h2>Recent activity</h2>
-                  <p>Latest workspace updates</p>
+                  <strong>Code verification</strong>
+                  <small>Automated tests and evidence</small>
                 </div>
-                <button className="icon-button subtle" aria-label="Activity options">
-                  <MoreHorizontal size={18} />
-                </button>
+                <span className="verification-status pending">In review</span>
               </div>
 
-              <div className="activity-list">
-                {activities.map((activity) => {
-                  const Icon = activity.icon;
-                  return (
-                    <div className="activity-item" key={activity.title}>
-                      <div className={`activity-icon ${activity.color}`}>
-                        <Icon size={16} />
-                      </div>
-                      <div className="activity-copy">
-                        <strong>{activity.title}</strong>
-                        <span>{activity.description}</span>
-                        <small>{activity.time}</small>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className="activity-summary">
-                <div className="summary-icon"><Activity size={17} /></div>
+              <div>
+                <span className="verification-icon waiting"><LockKeyhole size={13} /></span>
                 <div>
-                  <strong>Everything in one place.</strong>
-                  <span>Track work, verification and payments.</span>
+                  <strong>Payment release</strong>
+                  <small>After verification passes</small>
                 </div>
+                <span className="verification-status waiting-text">Pending</span>
               </div>
             </div>
-          </section>
 
-          <section className="bottom-banner">
-            <div className="banner-icon"><Zap size={20} /></div>
-            <div className="banner-copy">
-              <strong>Trust is built into every transaction.</strong>
-              <span>Code is tested. Deliverables are reviewed. Payments follow the outcome.</span>
+            <div className="escrow-footer">
+              <Fingerprint size={16} />
+              <span>Verification-led release workflow</span>
+              <CircleCheck size={16} />
             </div>
-            <div className="banner-badge">
-              <ShieldCheck size={15} /> TRUSTLAYER
-            </div>
-          </section>
+          </div>
 
-          <footer className="dashboard-footer">
-            <span>┬⌐ 2026 TrustLayer</span>
-            <span className="demo-disclaimer">
-              <span className="demo-dot" /> Prototype data ┬╖ Not live transactions
-            </span>
-            <span>Built for work you can trust.</span>
-          </footer>
+          <div className="floating-label label-bottom">
+            <span className="label-success"><Check size={14} /></span>
+            Evidence-based verification
+          </div>
         </div>
       </section>
+
+      <section className="principles">
+        <div><ShieldCheck size={17} /> Defined acceptance criteria</div>
+        <div><Zap size={17} /> Automated code testing</div>
+        <div><Eye size={17} /> Human review when needed</div>
+        <div><LockKeyhole size={17} /> Conditional release</div>
+      </section>
+
+      <section className="how-section" id="how-it-works">
+        <div className="section-heading">
+          <span className="section-eyebrow">THE WORKFLOW</span>
+          <h2>Trust isn't assumed. It's verified.</h2>
+          <p>One transparent process from agreement to payment release.</p>
+        </div>
+
+        <div className="steps-grid">
+          <article className="step-card">
+            <span className="step-number">01</span>
+            <div className="step-icon"><Layers3 size={22} /></div>
+            <h3>Agree on the work</h3>
+            <p>Set the contract, milestone value and measurable acceptance criteria.</p>
+          </article>
+
+          <article className="step-card">
+            <span className="step-number">02</span>
+            <div className="step-icon"><Code2 size={22} /></div>
+            <h3>Submit and verify</h3>
+            <p>Submit code for automated testing and additional structural review.</p>
+          </article>
+
+          <article className="step-card">
+            <span className="step-number">03</span>
+            <div className="step-icon"><CircleCheck size={22} /></div>
+            <h3>Review and release</h3>
+            <p>Release follows successful verification. Uncertain cases can be reviewed by a human.</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="features-section" id="features">
+        <div className="features-intro">
+          <span className="section-eyebrow">WHY TRUSTLAYER</span>
+          <h2>Built for work you can trust.</h2>
+          <p>
+            Clear expectations. Verifiable submissions. A more accountable
+            way to manage freelance software projects.
+          </p>
+          <Link href="/create-contract" className="feature-link">
+            Start a contract <ArrowUpRight size={16} />
+          </Link>
+        </div>
+
+        <div className="feature-list">
+          {features.map((feature) => {
+            const Icon = feature.icon;
+            return (
+              <article className="feature-card" key={feature.title}>
+                <div className="feature-icon"><Icon size={21} /></div>
+                <div>
+                  <h3>{feature.title}</h3>
+                  <p>{feature.description}</p>
+                </div>
+                <ArrowUpRight className="feature-arrow" size={18} />
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="final-cta">
+        <div className="cta-glow" />
+        <span className="section-eyebrow">A BETTER WAY TO COLLABORATE</span>
+        <h2>Make every milestone count.</h2>
+        <p>Start with clear expectations. Let verification guide the outcome.</p>
+        <Link href="/create-contract" className="hero-primary">
+          Create your first contract <ArrowRight size={17} />
+        </Link>
+      </section>
+
+      <footer className="landing-footer">
+        <Link href="/" className="landing-brand">
+          <span className="landing-brand-icon"><ShieldCheck size={20} /></span>
+          trust<span>layer</span>
+        </Link>
+        <span>Built for work you can trust.</span>
+        <Link href="/dashboard">Open dashboard <ArrowUpRight size={14} /></Link>
+        <span>© 2026 TrustLayer · Prototype</span>
+      </footer>
     </main>
   );
 }
