@@ -29,3 +29,4 @@ export const testCode = `
     assert.equal(sub.calculateTax(100000), 24000);
   });
 `;
+

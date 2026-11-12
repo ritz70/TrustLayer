@@ -26,3 +26,4 @@ export function calculateTax(income) {
 
   return Math.round(tax * 100) / 100;
 }
+

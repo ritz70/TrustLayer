@@ -8,6 +8,9 @@
 import type { PayPalAdapter } from "@/lib/types";
 import { MockPayPalAdapter } from "@/lib/mock/mock-paypal";
 
+// Singleton mock adapter instance to maintain state across requests
+const sharedMockAdapter = new MockPayPalAdapter();
+
 /**
  * Get the PayPal adapter based on the USE_MOCK_PAYPAL environment variable.
  *
@@ -18,7 +21,7 @@ export function getPayPalAdapter(): PayPalAdapter {
   const useMock = process.env.USE_MOCK_PAYPAL === "true";
 
   if (useMock) {
-    return new MockPayPalAdapter();
+    return sharedMockAdapter;
   }
 
   // TODO: Import and return real PayPal client once payments teammate builds it.
@@ -26,6 +29,5 @@ export function getPayPalAdapter(): PayPalAdapter {
   console.warn(
     "[PayPal] Real PayPal client not yet available. Falling back to mock adapter.",
   );
-  return new MockPayPalAdapter();
+  return sharedMockAdapter;
 }
-

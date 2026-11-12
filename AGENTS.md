@@ -142,9 +142,8 @@ Current priority order and status:
 - [x] **Phase 1: Foundation** - Scaffold Next.js, `types.ts`, `MockPayPalAdapter`, Supabase client/store, `001_initial.sql`, LICENSE, .env.example, vitest config (DONE).
 - [x] **Phase 2: State machine + policy gate with tests** - Pure state transitions, audit logger, deterministic release gate, 33/33 Vitest tests green (DONE).
 - [x] **Phase 3: Verifier** - Subprocess test runner, zod-validated LLM judge, prompt injection shields, 43/43 Vitest tests green (DONE).
-- [ ] **Phase 4: API routes** - Wiring state machine, verifier, and PayPal interface (NEXT).
-- [ ] **Phase 4: API routes** - Wiring state machine, verifier, and PayPal interface.
-- [ ] **Phase 5: Evals** - Labeled dataset + false-release metric script.
+- [x] **Phase 4: API routes** - Contracts, accept, fund, submit, review, release, webhooks, 45/45 Vitest tests green (DONE).
+- [ ] **Phase 5: Evals** - Labeled dataset + false-release metric script (NEXT).
 - [ ] **Phase 6: Integration & Demo** - Golden path verification, UI support.
 
 ## 12. Scope control

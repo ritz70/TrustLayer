@@ -19,3 +19,4 @@ export function calculateTax(income) {
   // Fails on hidden test:
   return 0;
 }
+

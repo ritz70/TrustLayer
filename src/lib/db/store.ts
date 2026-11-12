@@ -1,20 +1,38 @@
 /**
- * Persistence layer — contract and audit event CRUD via Supabase.
+ * Persistence layer — contract and audit event CRUD.
  *
- * All DB access goes through this module. The rest of the codebase
- * never imports Supabase directly.
+ * Automatically uses Supabase when configured, or falls back to an in-memory
+ * store in local dev/testing so the golden path is always runnable.
  */
 
 import { getSupabaseClient } from "./client";
 import type { Contract, AuditEvent, ContractState } from "@/lib/types";
 
+// In-memory fallback stores for offline dev / testing
+const inMemoryContracts = new Map<string, Contract>();
+const inMemoryAuditEvents = new Map<string, AuditEvent[]>();
+
+function isSupabaseConfigured(): boolean {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  return Boolean(
+    url &&
+      key &&
+      !url.includes("your-project") &&
+      !key.includes("your-service-role-key"),
+  );
+}
+
 // ---------------------------------------------------------------------------
 // Contracts
 // ---------------------------------------------------------------------------
 
-export async function createContract(
-  contract: Contract,
-): Promise<Contract> {
+export async function createContract(contract: Contract): Promise<Contract> {
+  if (!isSupabaseConfigured()) {
+    inMemoryContracts.set(contract.id, { ...contract });
+    return contract;
+  }
+
   const db = getSupabaseClient();
   const row = contractToRow(contract);
   const { data, error } = await db.from("contracts").insert(row).select().single();
@@ -23,6 +41,11 @@ export async function createContract(
 }
 
 export async function getContract(id: string): Promise<Contract | null> {
+  if (!isSupabaseConfigured()) {
+    const existing = inMemoryContracts.get(id);
+    return existing ? { ...existing } : null;
+  }
+
   const db = getSupabaseClient();
   const { data, error } = await db
     .from("contracts")
@@ -37,6 +60,12 @@ export async function getContract(id: string): Promise<Contract | null> {
 }
 
 export async function listContracts(): Promise<Contract[]> {
+  if (!isSupabaseConfigured()) {
+    return Array.from(inMemoryContracts.values()).sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
+  }
+
   const db = getSupabaseClient();
   const { data, error } = await db
     .from("contracts")
@@ -50,9 +79,23 @@ export async function updateContract(
   id: string,
   updates: Partial<Contract>,
 ): Promise<Contract> {
+  if (!isSupabaseConfigured()) {
+    const existing = inMemoryContracts.get(id);
+    if (!existing) {
+      throw new Error(`Contract not found: ${id}`);
+    }
+    const updated: Contract = {
+      ...existing,
+      ...updates,
+      id,
+      updatedAt: new Date().toISOString(),
+    };
+    inMemoryContracts.set(id, updated);
+    return updated;
+  }
+
   const db = getSupabaseClient();
   const row = contractToRow({ ...updates, id } as Contract);
-  // Only include defined fields in the update
   const updateRow: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(row)) {
     if (value !== undefined && key !== "id") {
@@ -76,6 +119,13 @@ export async function updateContract(
 // ---------------------------------------------------------------------------
 
 export async function appendAuditEvent(event: AuditEvent): Promise<void> {
+  if (!isSupabaseConfigured()) {
+    const list = inMemoryAuditEvents.get(event.contractId) || [];
+    list.push(event);
+    inMemoryAuditEvents.set(event.contractId, list);
+    return;
+  }
+
   const db = getSupabaseClient();
   const { error } = await db.from("audit_events").insert({
     id: event.id,
@@ -89,6 +139,10 @@ export async function appendAuditEvent(event: AuditEvent): Promise<void> {
 }
 
 export async function getAuditEvents(contractId: string): Promise<AuditEvent[]> {
+  if (!isSupabaseConfigured()) {
+    return (inMemoryAuditEvents.get(contractId) || []).slice();
+  }
+
   const db = getSupabaseClient();
   const { data, error } = await db
     .from("audit_events")
@@ -110,7 +164,7 @@ export async function getAuditEvents(contractId: string): Promise<AuditEvent[]> 
 // Row <-> Domain mappers
 // ---------------------------------------------------------------------------
 
-/* eslint-disable @typescript-eslint/no-explicit-any -- DB row shapes are dynamic */
+/* eslint-disable @typescript-eslint/no-explicit-any -- dynamic Postgres row */
 function contractToRow(c: Contract): Record<string, unknown> {
   return {
     id: c.id,
@@ -159,4 +213,3 @@ function rowToContract(row: any): Contract {
   };
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
-
