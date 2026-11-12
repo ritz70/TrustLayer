@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Suspense, useCallback, useEffect, useState, use } from "react";
 import Link from "next/link";
@@ -257,7 +257,7 @@ await test('bracket 2: 30000 -> 5000', (sub, assert) => {
   );
 
   return (
-    <main className="create-contract-page min-h-screen text-slate-100">
+    <main className="create-contract-page workspace-page min-h-screen text-slate-100">
       {/* Top Header */}
       <header className="create-topbar">
         <Link href="/" className="back-link">
@@ -275,7 +275,7 @@ await test('bracket 2: 30000 -> 5000', (sub, assert) => {
         <div className="create-heading mb-6">
           <div className="eyebrow flex items-center gap-2">
             <span className="eyebrow-dot" />
-            CONTRACT WORKSPACE • ID: {contract.id.slice(0, 8)}
+            CONTRACT WORKSPACE â€¢ ID: {contract.id.slice(0, 8)}
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-white">{contract.title}</h1>
           <p className="mt-1 text-slate-400">{contract.description || "No description provided."}</p>
@@ -326,7 +326,7 @@ await test('bracket 2: 30000 -> 5000', (sub, assert) => {
                           : "bg-slate-800 text-slate-500"
                     }`}
                   >
-                    {isPast ? "✓" : idx + 1}
+                    {isPast ? "âœ“" : idx + 1}
                   </div>
                   <span
                     className={
@@ -339,7 +339,7 @@ await test('bracket 2: 30000 -> 5000', (sub, assert) => {
                   >
                     {step.label}
                   </span>
-                  {idx < 5 && <span className="text-slate-700 hidden sm:inline">→</span>}
+                  {idx < 5 && <span className="text-slate-700 hidden sm:inline">â†’</span>}
                 </div>
               );
             })}
@@ -393,14 +393,14 @@ await test('bracket 2: 30000 -> 5000', (sub, assert) => {
                     onClick={loadFailingDemo}
                     className="rounded-lg border border-rose-500/30 bg-rose-950/30 px-3 py-1.5 text-xs font-medium text-rose-300 hover:bg-rose-900/40 transition"
                   >
-                    ⚡ Demo Fail
+                    âš¡ Demo Fail
                   </button>
                   <button
                     type="button"
                     onClick={loadPassingDemo}
                     className="rounded-lg border border-emerald-500/30 bg-emerald-950/30 px-3 py-1.5 text-xs font-medium text-emerald-300 hover:bg-emerald-900/40 transition"
                   >
-                    ⚡ Demo Pass
+                    âš¡ Demo Pass
                   </button>
                 </div>
               </div>
@@ -560,7 +560,7 @@ await test('bracket 2: 30000 -> 5000', (sub, assert) => {
 
                 {contract.state === ContractState.RELEASED && (
                   <div className="rounded-xl border border-emerald-500/30 bg-emerald-950/30 p-3 text-center text-xs font-semibold text-emerald-300">
-                    ✓ Escrow funds released successfully!
+                    âœ“ Escrow funds released successfully!
                   </div>
                 )}
               </div>
@@ -609,3 +609,4 @@ export default function ContractDetailPage(props: {
     </Suspense>
   );
 }
+
