@@ -143,8 +143,8 @@ Current priority order and status:
 - [x] **Phase 2: State machine + policy gate with tests** - Pure state transitions, audit logger, deterministic release gate, 33/33 Vitest tests green (DONE).
 - [x] **Phase 3: Verifier** - Subprocess test runner, zod-validated LLM judge, prompt injection shields, 43/43 Vitest tests green (DONE).
 - [x] **Phase 4: API routes** - Contracts, accept, fund, submit, review, release, webhooks, 45/45 Vitest tests green (DONE).
-- [ ] **Phase 5: Evals** - Labeled dataset + false-release metric script (NEXT).
-- [ ] **Phase 6: Integration & Demo** - Golden path verification, UI support.
+- [x] **Phase 5: Evals** - 20 labeled benchmark cases, 0.00% false-release rate (15/15 attacks held), npm run eval verified (DONE).
+- [ ] **Phase 6: Integration & Demo** - Golden path verification, UI support (NEXT).
 
 ## 12. Scope control
 
