@@ -144,7 +144,7 @@ Current priority order and status:
 - [x] **Phase 3: Verifier** - Subprocess test runner, zod-validated LLM judge, prompt injection shields, 43/43 Vitest tests green (DONE).
 - [x] **Phase 4: API routes** - Contracts, accept, fund, submit, review, release, webhooks, 45/45 Vitest tests green (DONE).
 - [x] **Phase 5: Evals** - 20 labeled benchmark cases, 0.00% false-release rate (15/15 attacks held), npm run eval verified (DONE).
-- [ ] **Phase 6: Integration & Demo** - Golden path verification, UI support (NEXT).
+- [x] **Phase 6: Integration & Demo** - Golden path verified, interactive UI workspace, production build green (DONE).
 
 ## 12. Scope control
 
@@ -154,10 +154,10 @@ Non-goals: subjective-work judging, multi-party marketplace, real money, reputat
 
 ## 13. Definition of done
 
-- [ ] Golden path passes in the sandbox (or the clearly labeled mock)
-- [ ] Tests green; eval script runs and reports false-release rate
-- [ ] README: setup, env vars, test accounts, run steps, limits (29-day hold, checkable work only)
-- [ ] MIT LICENSE visible, repo public, no secrets in history
+- [x] Golden path passes in the sandbox (or the clearly labeled mock)
+- [x] Tests green; eval script runs and reports false-release rate (0.00%)
+- [x] README: setup, env vars, test accounts, run steps, limits (29-day hold, checkable work only)
+- [x] MIT LICENSE visible, repo public, no secrets in history
 - [ ] Hosted URL works from a clean browser (wake the Render service before recording)
 - [ ] Devpost text, tools used and how, video under 3 minutes showing failure before success
 - [ ] Submitted well before the deadline

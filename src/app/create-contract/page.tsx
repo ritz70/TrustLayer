@@ -3,16 +3,19 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   ArrowRight,
   Check,
   Plus,
   ShieldCheck,
+  Sparkles,
   Trash2,
 } from "lucide-react";
 
 export default function CreateContractPage() {
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [freelancerEmail, setFreelancerEmail] = useState("");
@@ -21,6 +24,7 @@ export default function CreateContractPage() {
   const [milestone, setMilestone] = useState("70");
   const [criteria, setCriteria] = useState(["", ""]);
   const [showPreview, setShowPreview] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   function updateCriterion(index: number, value: string) {
     setCriteria((current) =>
@@ -36,6 +40,37 @@ export default function CreateContractPage() {
     setCriteria((current) =>
       current.filter((_, i) => i !== index)
     );
+  }
+
+  async function handleCreateContract() {
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/contracts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: title.trim(),
+          description: description.trim(),
+          criteria: validCriteria.map((c) => ({ description: c, hasTest: true })),
+          amountCents: Math.round(Number(amount || 0) * 100),
+          currency: "USD",
+          milestonePercent: Number(milestone || 70),
+          clientId: "client-alice@example.com",
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || data.error || "Failed to create contract");
+      }
+
+      const contract = await res.json();
+      router.push(`/contracts/${contract.id}`);
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : String(err));
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   function handlePreview(event: React.FormEvent<HTMLFormElement>) {
@@ -399,20 +434,26 @@ export default function CreateContractPage() {
                 ))}
               </ul>
 
-              <div className="preview-warning">
-                This is a local preview only. Backend contract creation,
-                freelancer acceptance and payment authorization are not
-                connected yet.
-              </div>
+              <div className="mt-6 flex flex-col gap-3">
+                <button
+                  type="button"
+                  disabled={submitting}
+                  className="primary-button flex items-center justify-center gap-2 py-3 text-sm font-semibold"
+                  onClick={handleCreateContract}
+                >
+                  <Sparkles size={16} />
+                  {submitting ? "Creating Contract..." : "Create Contract & Open Escrow"}
+                </button>
 
-              <button
-                type="button"
-                className="primary-button"
-                onClick={() => setShowPreview(false)}
-              >
-                <ArrowLeft size={16} />
-                Back to editing
-              </button>
+                <button
+                  type="button"
+                  disabled={submitting}
+                  className="rounded-xl border border-white/10 bg-transparent py-2.5 text-xs font-medium text-slate-400 hover:text-white transition"
+                  onClick={() => setShowPreview(false)}
+                >
+                  Back to editing
+                </button>
+              </div>
             </section>
           </div>
         )}
