@@ -1,3 +1,5 @@
+import "./dashboard.css";
+
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -21,15 +23,15 @@ import {
 } from "lucide-react";
 
 const navigation = [
-  { label: "Overview", icon: LayoutDashboard, active: true },
-  { label: "Explore contracts", icon: BriefcaseBusiness },
-  { label: "My contracts", icon: FileCheck2 },
-  { label: "Workspace", icon: Code2 },
+  { label: "Overview", icon: LayoutDashboard, active: true, href: "/dashboard" },
+  { label: "Explore contracts", icon: BriefcaseBusiness, disabled: true },
+  { label: "My contracts", icon: FileCheck2, href: "#my-contracts" },
+  { label: "Workspace", icon: Code2, href: "#my-contracts" },
 ];
 
 const management = [
-  { label: "Verification", icon: ShieldCheck },
-  { label: "Payments", icon: Wallet },
+  { label: "Verification", icon: ShieldCheck, disabled: true },
+  { label: "Payments", icon: Wallet, disabled: true },
 ];
 
 const contracts = [
@@ -96,26 +98,39 @@ function SidebarLink({
   icon: Icon,
   label,
   active = false,
+  href,
+  disabled = false,
 }: {
   icon: LucideIcon;
   label: string;
   active?: boolean;
+  href?: string;
+  disabled?: boolean;
 }) {
+  const className = `sidebar-link ${active ? "active" : ""} ${disabled ? "disabled" : ""}`;
+
+  if (disabled || !href) {
+    return (
+      <span className={className} aria-disabled="true">
+        <Icon size={18} strokeWidth={1.8} />
+        <span>{label}</span>
+        {active && <span className="active-indicator" />}
+      </span>
+    );
+  }
+
   return (
-    <a
-      href="#"
-      className={`sidebar-link ${active ? "active" : ""}`}
-    >
+    <Link href={href} className={className}>
       <Icon size={18} strokeWidth={1.8} />
       <span>{label}</span>
       {active && <span className="active-indicator" />}
-    </a>
+    </Link>
   );
 }
 
 export default function Home() {
   return (
-    <main className="app-shell">
+    <main className="app-shell db">
       <aside className="sidebar">
         <Link href="/dashboard" className="brand">
           <div className="brand-icon">
@@ -141,7 +156,7 @@ export default function Home() {
         </div>
 
         <div className="nav-section">
-          <p className="nav-heading">TRUST & FINANCE</p>
+          <p className="nav-heading">TRUST &amp; FINANCE</p>
           {management.map((item) => (
             <SidebarLink key={item.label} {...item} />
           ))}
@@ -185,7 +200,7 @@ export default function Home() {
             <div className="search-box">
               <Search size={16} />
               <span>Search anything...</span>
-              <kbd>Γîÿ K</kbd>
+              <kbd>⌘ K</kbd>
             </div>
             <button className="icon-button" aria-label="Notifications">
               <Bell size={18} />
@@ -278,7 +293,7 @@ export default function Home() {
                 <button className="text-button">View all <ArrowUpRight size={14} /></button>
               </div>
 
-              <div className="contract-table">
+              <div className="contract-table" id="my-contracts">
                 <div className="table-heading">
                   <span>CONTRACT</span>
                   <span>FREELANCER</span>
@@ -377,9 +392,9 @@ export default function Home() {
           </section>
 
           <footer className="dashboard-footer">
-            <span>┬⌐ 2026 TrustLayer</span>
+            <span>© 2026 TrustLayer</span>
             <span className="demo-disclaimer">
-              <span className="demo-dot" /> Prototype data ┬╖ Not live transactions
+              <span className="demo-dot" /> Prototype data · Not live transactions
             </span>
             <span>Built for work you can trust.</span>
           </footer>
